@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: kafka-api-boleto
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:boleto
+    driver-class-name: org.h2.Driver
+    password: 123
+    username: admin
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 8282
+
