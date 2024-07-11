@@ -4,7 +4,6 @@ import br.com.bergmann.kafka_api_boleto.model.enums.Situation;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -12,6 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Boleto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

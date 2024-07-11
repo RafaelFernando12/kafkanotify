@@ -1,5 +1,6 @@
 package br.com.bergmann.kafka_api_boleto.service;
 
+import br.com.bergmann.kafka_api_boleto.controller.exception.ApplicationException;
 import br.com.bergmann.kafka_api_boleto.dto.BoletoDTO;
 import br.com.bergmann.kafka_api_boleto.mapper.BoletoMapper;
 import br.com.bergmann.kafka_api_boleto.model.Boleto;
@@ -20,10 +21,10 @@ public class BoletoService {
         this.boletoMapper = boletoMapper;
     }
 
-    public BoletoDTO salvar(String barCode){
+    public BoletoDTO save(String barCode){
         var bol = boletoRepository.findByBarCode(barCode);
         if(bol.isPresent()){
-            throw new RuntimeException("There is already a payment request for this payment slip");
+            throw new ApplicationException("There is already a payment request for this payment slip");
         }
 
         var boleto = Boleto.builder()
