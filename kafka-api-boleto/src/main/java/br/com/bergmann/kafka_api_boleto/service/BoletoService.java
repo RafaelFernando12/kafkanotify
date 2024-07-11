@@ -6,6 +6,7 @@ import br.com.bergmann.kafka_api_boleto.mapper.BoletoMapper;
 import br.com.bergmann.kafka_api_boleto.model.Boleto;
 import br.com.bergmann.kafka_api_boleto.model.enums.Situation;
 import br.com.bergmann.kafka_api_boleto.repository.BoletoRepository;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,7 +22,7 @@ public class BoletoService {
         this.boletoMapper = boletoMapper;
     }
 
-    public BoletoDTO save(String barCode){
+    public BoletoDTO save(@Valid String barCode){
         var bol = boletoRepository.findByBarCode(barCode);
         if(bol.isPresent()){
             throw new ApplicationException("There is already a payment request for this payment slip");
