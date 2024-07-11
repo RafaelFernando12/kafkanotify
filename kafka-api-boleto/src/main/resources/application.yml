@@ -17,8 +17,18 @@ spring:
     hibernate:
       ddl-auto: update
 
+  kafka:
+    bootstrap-servers: localhost:19092
+    topico-boleto: solicitacao-boleto
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerialize
+
 server:
   port: 8282
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
