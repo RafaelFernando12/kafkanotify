@@ -6,6 +6,7 @@ import br.com.bergmann.kafka_api_boleto.mapper.BoletoMapper;
 import br.com.bergmann.kafka_api_boleto.model.Boleto;
 import br.com.bergmann.kafka_api_boleto.model.enums.Situation;
 import br.com.bergmann.kafka_api_boleto.repository.BoletoRepository;
+import br.com.bergmann.kafka_api_boleto.service.kafka.BoletoProducer;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,12 @@ public class BoletoService {
 
     private final BoletoRepository boletoRepository;
     private final BoletoMapper boletoMapper;
+    private final BoletoProducer boletoProducer;
 
-    public BoletoService(BoletoRepository boletoRepository, BoletoMapper boletoMapper) {
+    public BoletoService(BoletoRepository boletoRepository, BoletoMapper boletoMapper, BoletoProducer boletoProducer) {
         this.boletoRepository = boletoRepository;
         this.boletoMapper = boletoMapper;
+        this.boletoProducer = boletoProducer;
     }
 
     public BoletoDTO save(@Valid String barCode){
@@ -36,7 +39,8 @@ public class BoletoService {
                 .build();
 
         boletoRepository.save(boleto);
-
-        return boletoMapper.toBoletoDTO(boleto);
+        var boletoDTO = boletoMapper.toBoletoDTO(boleto);
+        boletoProducer.sendMessage(boletoDTO);
+        return boletoDTO;
     }
 }
