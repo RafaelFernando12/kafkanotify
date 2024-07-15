@@ -16,12 +16,10 @@ import java.time.LocalDateTime;
 public class BoletoService {
 
     private final BoletoRepository boletoRepository;
-    private final BoletoMapper boletoMapper;
     private final BoletoProducer boletoProducer;
 
-    public BoletoService(BoletoRepository boletoRepository, BoletoMapper boletoMapper, BoletoProducer boletoProducer) {
+    public BoletoService(BoletoRepository boletoRepository, BoletoProducer boletoProducer) {
         this.boletoRepository = boletoRepository;
-        this.boletoMapper = boletoMapper;
         this.boletoProducer = boletoProducer;
     }
 
@@ -39,8 +37,7 @@ public class BoletoService {
                 .build();
 
         boletoRepository.save(boleto);
-        var boletoDTO = boletoMapper.toBoletoDTO(boleto);
-        boletoProducer.sendMessage(boletoDTO);
-        return boletoDTO;
+        boletoProducer.sendMessage(BoletoMapper.toAvro(boleto));
+        return BoletoMapper.toDTO(boleto);
     }
 }
