@@ -2,10 +2,8 @@ package br.com.bergmann.kafka_api_boleto.mapper;
 
 import br.com.bergmann.kafka_api_boleto.dto.BoletoDTO;
 import br.com.bergmann.kafka_api_boleto.model.Boleto;
-import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
-public interface BoletoMapper {
+public class BoletoMapper {
 
     public static BoletoDTO toDTO(Boleto boleto) {
         return BoletoDTO.builder()
